@@ -28,6 +28,38 @@ var imageCmd = &cobra.Command{
 	},
 }
 
+func imageFunc(args []string) string {
+	userArgs := strings.Join(args[0:], " ")
 
+	ctx := context.Background()
+	client, err := genai.NewClient(ctx, option.WithAPIKey(os.Getenv("GEMINI_API_KEY")))
+	CheckNilError(err)
+	defer client.Close()
 
+	model := client.GenerativeModel("gemini-1.5-flash")
 
+	imgData, err := os.ReadFile(imageFilePath)
+	CheckNilError(err)
+
+	// Supports multiple image inputs
+	prompt := []genai.Part{
+		genai.ImageData(imageFileFormat, imgData),
+		genai.Text(userArgs),
+	}
+
+	resp, err := model.GenerateContent(ctx, prompt...)
+	CheckNilError(err)
+
+	finalResponse := resp.Candidates[0].Content.Parts[0]
+	return fmt.Sprint(finalResponse)
+
+}
+
+func init() {
+	imageCmd.Flags().StringVarP(&imageFilePath, "path", "p", "", "Enter the image path")
+	imageCmd.Flags().StringVarP(&imageFileFormat, "format", "f", "", "Enter the image format (jpeg, png, etc.)")
+	errPathF := imageCmd.MarkFlagRequired("path")
+	errFormatF := imageCmd.MarkFlagRequired("format")
+	CheckNilError(errPathF)
+	CheckNilError(errFormatF)
+}
