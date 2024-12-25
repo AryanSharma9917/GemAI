@@ -3,13 +3,14 @@ module Gemai
 go 1.23.3
 
 require (
+	github.com/Pradumnasaraf/gencli v1.5.0
 	github.com/google/generative-ai-go v0.19.0
 	github.com/spf13/cobra v1.8.1
 	google.golang.org/api v0.214.0
 )
 
 require (
-	cloud.google.com/go v0.115.0 // indirect
+	cloud.google.com/go v0.115.1 // indirect
 	cloud.google.com/go/ai v0.8.0 // indirect
 	cloud.google.com/go/auth v0.13.0 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.6 // indirect
