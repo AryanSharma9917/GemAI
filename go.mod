@@ -3,7 +3,9 @@ module Gemai
 go 1.23.3
 
 require (
-	github.com/AryanSharma9917/GemAI v1.0.0
+	// github.com/AryanSharma9917/GemAI v1.0.0
+	module github.com/AryanSharma9917/GemAI
+
 	github.com/google/generative-ai-go v0.19.0
 	github.com/spf13/cobra v1.8.1
 	google.golang.org/api v0.214.0
